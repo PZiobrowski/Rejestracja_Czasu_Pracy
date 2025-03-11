@@ -4,7 +4,8 @@ if (Test-Path $projectPath) {
     Set-Location $projectPath
 
     # Uruchom aplikację .NET
-    Write-Host "Run..."
+    Write-Host "Uruchamianie..."
     dotnet run
 } else {
+    Write-Host "Nie znaleziono projektu"
 }
