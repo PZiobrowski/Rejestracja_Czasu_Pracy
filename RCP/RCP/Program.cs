@@ -20,7 +20,7 @@ builder.Services.AddCors(options =>
 });
 
 
-builder.Services.AddDbContext<RcpDBContext>(options =>
+builder.Services.AddDbContext<RcpDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DateBaseConnection")));
 
 builder.Services.AddScoped<IWorktimeManager, WorktimeManager>();

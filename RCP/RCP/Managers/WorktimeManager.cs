@@ -5,9 +5,9 @@ namespace RCP.Managers
 {
     public class WorktimeManager : IWorktimeManager
     {
-        private readonly RcpDBContext _context;
+        private readonly RcpDbContext _context;
 
-        public WorktimeManager(RcpDBContext context)
+        public WorktimeManager(RcpDbContext context)
         {
             _context = context;
         }
@@ -18,11 +18,11 @@ namespace RCP.Managers
         /// <param name="userId">Identyfikator użytkownika rozpoczynającego pracę</param>
         public string StartWork(Guid userId)
         {
-            var existingWork = _context.Works.FirstOrDefault(w => w.UserId == userId && w.EndTime == null);
+            var existingWork = _context.GetWorkInProgress(userId);
             if (existingWork != null)
                 return Messages.WorkInProgress;
 
-            _context.Works.Add(new Work
+            _context.AddWork(new Work
             { 
                 StartTime = DateTime.UtcNow, UserId = userId 
             });
@@ -38,7 +38,7 @@ namespace RCP.Managers
         /// <param name="userId">Identyfikator użytkownika kończącego pracę</param>
         public string StopWork(Guid userId)
         {
-            var existingWork = _context.Works.FirstOrDefault(w => w.UserId == userId && w.EndTime == null);
+            var existingWork = _context.GetWorkInProgress(userId);
             if (existingWork == null)
                 return Messages.WorkNotStarted;
 
@@ -55,11 +55,11 @@ namespace RCP.Managers
         /// <param name="userId">Identyfikator użytkownika rozpoczynającego przerwę</param>
         public string StartBreak(Guid userId)
         {
-            var existingBreak = _context.Breaks.FirstOrDefault(w => w.UserId == userId && w.EndTime == null);
+            var existingBreak = _context.GetBreakInProgress(userId);
             if (existingBreak != null)
                 return Messages.BreakInProgress;
 
-            _context.Breaks.Add(new Break
+            _context.AddBreak(new Break
             {
                 StartTime = DateTime.UtcNow,
                 UserId = userId
@@ -76,7 +76,7 @@ namespace RCP.Managers
         /// <param name="userId">Identyfikator użytkownika kończącego przerwę</param>
         public string StopBreak(Guid userId)
         {
-            var existingBreak = _context.Breaks.FirstOrDefault(w => w.UserId == userId && w.EndTime == null);
+            var existingBreak = _context.GetBreakInProgress(userId);
             if (existingBreak == null)
                 return Messages.BreakNotStarted;
 

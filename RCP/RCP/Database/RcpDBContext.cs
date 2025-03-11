@@ -3,20 +3,22 @@ using RCP.Model;
 
 namespace RCP.Database
 {
-    public class RcpDBContext : DbContext
+    public partial class RcpDbContext : DbContext
     {
-        public RcpDBContext(DbContextOptions<RcpDBContext> options) : base(options)
+        public RcpDbContext(DbContextOptions<RcpDbContext> options) : base(options)
         {
         }
-
-        public DbSet<User> Users { get; set; }
-
-        public DbSet<Work> Works { get; set; }
-
-        public DbSet<Break> Breaks { get; set; }
-
+       
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>(eb =>
+            {
+                eb.HasKey(w => w.Id);
+                eb.Property(w => w.Id).HasComment("Identyfikator");
+                eb.Property(w => w.FirstName).HasComment("Imię");
+                eb.Property(w => w.Lastname).HasComment("Nazwisko");
+            });
+
             modelBuilder.Entity<Work>(eb =>
             {
                 eb.HasKey(w => w.Id);
@@ -24,6 +26,11 @@ namespace RCP.Database
                     .WithMany()
                     .HasForeignKey(w => w.UserId)
                     .OnDelete(DeleteBehavior.Cascade);
+
+                eb.Property(w => w.Id).HasComment("Identyfikator");
+                eb.Property(w => w.StartTime).HasComment("Czas rozpoczęcia pracy");
+                eb.Property(w => w.EndTime).HasComment("Czas zakończenia pracy");
+                eb.Property(w => w.UserId).HasComment("Identyfikator użytkownika");
             });
 
             modelBuilder.Entity<Break>(eb =>
@@ -33,6 +40,11 @@ namespace RCP.Database
                     .WithMany()
                     .HasForeignKey(w => w.UserId)
                     .OnDelete(DeleteBehavior.Cascade);
+
+                eb.Property(w => w.Id).HasComment("Identyfikator");
+                eb.Property(w => w.StartTime).HasComment("Czas rozpoczęcia pracy");
+                eb.Property(w => w.EndTime).HasComment("Czas zakończenia pracy");
+                eb.Property(w => w.UserId).HasComment("Identyfikator użytkownika");
             });
         }
 

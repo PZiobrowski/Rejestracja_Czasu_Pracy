@@ -20,11 +20,21 @@ Aplikacja webowa służąca do rejestracji czasu pracy zdalnej.
 | Klucz | Type     | Opis                |
 | :-------- | :------- | :------------------------- |
 | `ConnectionStrings:DateBaseConnection` | `string` | Connection string do bazy danych |
-| `Port` | `int` |Port aplikacji |
+| `Port` | `int` | Port aplikacji |
+
+#### config.json
+
+
+| Klucz | Type     | Opis                |
+| :-------- | :------- | :------------------------- |
+| `serverPort` | `int` | Port servera |
 
 
 
 
+## Konfiguracja bazy danych
+
+Należy utworzyć bazę danych. Następnie uruchomić skrypt UpdateDatabase.ps1, a ostatecznie na bazie należy uruchomić skrypt AddUser.sql
 
 ## Uruchamianie
 

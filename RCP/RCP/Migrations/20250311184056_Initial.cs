@@ -15,9 +15,9 @@ namespace RCP.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Lastname = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "Identyfikator"),
+                    FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true, comment: "Imię"),
+                    Lastname = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true, comment: "Nazwisko")
                 },
                 constraints: table =>
                 {
@@ -28,11 +28,11 @@ namespace RCP.Migrations
                 name: "Breaks",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false, comment: "Identyfikator")
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Czas rozpoczęcia pracy"),
+                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: true, comment: "Czas zakończenia pracy"),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "Identyfikator użytkownika")
                 },
                 constraints: table =>
                 {
@@ -49,11 +49,11 @@ namespace RCP.Migrations
                 name: "Works",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false, comment: "Identyfikator")
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Czas rozpoczęcia pracy"),
+                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: true, comment: "Czas zakończenia pracy"),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "Identyfikator użytkownika")
                 },
                 constraints: table =>
                 {
