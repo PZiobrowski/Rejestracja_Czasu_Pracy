@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using RCP.Database;
 using RCP.Managers;
 
 namespace RCP.Controllers;
@@ -8,10 +9,12 @@ namespace RCP.Controllers;
 public class WorkRegistrationController : ControllerBase
 {
     private readonly IWorktimeManager worktimeManager;
+    private readonly RcpDbContext context;
 
-    public WorkRegistrationController(IWorktimeManager worktimeManager)
+    public WorkRegistrationController(IWorktimeManager worktimeManager, RcpDbContext context)
     {
         this.worktimeManager = worktimeManager;
+        this.context = context;
     }
 
     /// <summary>
@@ -20,8 +23,11 @@ public class WorkRegistrationController : ControllerBase
     [HttpPost("StartWork")]
     public IActionResult StartWork()
     {
-        var userId = new Guid("AC42144C-3F50-4C51-916B-F0C240A53A89"); // W docelowej wersji aplikacji nale¿a³oby pobraæ identyfikator u¿ytkownika z kontekstu
-        var message = worktimeManager.StartWork(userId);
+        var user = context.GetUser(); // W docelowej wersji aplikacji nale¿a³oby pobraæ identyfikator u¿ytkownika z kontekstu
+        if (user == null)
+            return Unauthorized();
+
+        var message = worktimeManager.StartWork(user.Id);
         return Ok(message);
     }
 
@@ -31,8 +37,11 @@ public class WorkRegistrationController : ControllerBase
     [HttpPatch("StopWork")]
     public IActionResult StopWork()
     {
-        var userId = new Guid("AC42144C-3F50-4C51-916B-F0C240A53A89"); // W docelowej wersji aplikacji nale¿a³oby pobraæ identyfikator u¿ytkownika z kontekstu
-        var message = worktimeManager.StopWork(userId);
+        var user = context.GetUser(); // W docelowej wersji aplikacji nale¿a³oby pobraæ identyfikator u¿ytkownika z kontekstu
+        if (user == null)
+            return Unauthorized();
+
+        var message = worktimeManager.StopWork(user.Id);
         return Ok(message);
     }
 
@@ -42,8 +51,11 @@ public class WorkRegistrationController : ControllerBase
     [HttpPost("StartBreak")]
     public IActionResult StartBreak()
     {
-        var userId = new Guid("AC42144C-3F50-4C51-916B-F0C240A53A89"); // W docelowej wersji aplikacji nale¿a³oby pobraæ identyfikator u¿ytkownika z kontekstu
-        var message = worktimeManager.StartBreak(userId);
+        var user = context.GetUser(); // W docelowej wersji aplikacji nale¿a³oby pobraæ identyfikator u¿ytkownika z kontekstu
+        if (user == null)
+            return Unauthorized();
+
+        var message = worktimeManager.StartBreak(user.Id);
         return Ok(message);
     }
 
@@ -53,8 +65,11 @@ public class WorkRegistrationController : ControllerBase
     [HttpPatch("StopBreak")]
     public IActionResult StopBreak()
     {
-        var userId = new Guid("AC42144C-3F50-4C51-916B-F0C240A53A89"); // W docelowej wersji aplikacji nale¿a³oby pobraæ identyfikator u¿ytkownika z kontekstu
-        var message = worktimeManager.StopBreak(userId);
+        var user = context.GetUser(); // W docelowej wersji aplikacji nale¿a³oby pobraæ identyfikator u¿ytkownika z kontekstu
+        if (user == null)
+            return Unauthorized();
+
+        var message = worktimeManager.StopBreak(user.Id);
         return Ok(message);
     }
 }
